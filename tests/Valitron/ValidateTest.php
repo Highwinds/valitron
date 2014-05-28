@@ -654,6 +654,20 @@ class ValidateTest extends BaseTestCase
         $v->rule('boolean', 'test');
         $this->assertFalse($v->validate());
     }
+
+    public function testZeroStillTriggersValidation()
+    {
+        $v = new Validator(array('test' => 0));
+        $v->rule('min', 'test', 1);
+        $this->assertFalse($v->validate());
+    }
+
+    public function testFalseStillTriggersValidation()
+    {
+        $v = new Validator(array('test' => FALSE));
+        $v->rule('min', 'test', 5);
+        $this->assertFalse($v->validate());
+    }
 }
 
 function sampleFunctionCallback($field, $value, array $params) {
